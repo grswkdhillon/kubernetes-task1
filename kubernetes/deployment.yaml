@@ -1,0 +1,27 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: fsfunctions
+spec:
+   replicas: 2
+   selector:     
+    matchLabels:
+     name: fsfunctions
+   template:
+     metadata:
+       name: fsfunc
+       labels:
+         name: fsfunctions
+     spec:
+      containers:
+        - name: fsfunctions
+          image: grswkdhlln/fsfunctions
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - mountPath: /app/createdFiles
+              name: fsvolume  
+      volumes:
+        - hostPath:
+            path: /tmp/createdFiles
+          name: fsvolume
